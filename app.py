@@ -37,7 +37,7 @@ def init_auth_code_flow():
     authorization_url = f"{authorization_endpoint}?{urllib.parse.urlencode(params)}"
     webbrowser.open(authorization_url)
 
-def set_reconnect_header(code):
+def set_reconnect_token(code):
 
     encoded_code = base64.b64encode(f"<http://localhost/>:{code}".encode())
 
@@ -57,7 +57,7 @@ class AuthCodeResponseHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            set_reconnect_header(self.extract_code())
+            set_reconnect_token(self.extract_code())
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
             self.end_headers()
