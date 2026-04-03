@@ -67,18 +67,6 @@ class AuthCodeResponseHandler(http.server.BaseHTTPRequestHandler):
         finally:
             threading.Thread(target=self.server.shutdown, daemon=True).start()
 
-    def response_error(self):
-        self.send_response(500)
-        self.send_header("Content-type", "text/plain")
-        self.end_headers()
-        self.wfile.write(traceback.format_exc().encode())
-
-    def response_success(self, tokens: str):
-        self.send_response(200)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-        self.wfile.write(tokens.encode())
-
     def extract_code(self) -> str:
         host = self.headers.get("Host")
         full_url = f"http://{host}{self.path}"
