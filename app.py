@@ -22,6 +22,9 @@ client_id = os.environ["CLIENT_ID"]
 scope = os.environ["SCOPE"]
 callback_url = os.environ["REDIRECT_URL"]
 
+maconomy_host = os.environ["MACONOMY_HOST"]
+maconomy_installation = os.environ["MACONOMY_INSTALLATION"]
+
 
 def init_auth_code_flow():
 
@@ -38,7 +41,7 @@ def set_reconnect_header(code):
 
     encoded_code = base64.b64encode(f"<http://localhost/>:{code}".encode())
 
-    url = "https://b3iaccess.deltekenterprise.com/maconomy-api/auth/b3"
+    url = f"https://{maconomy_host}/maconomy-api/auth/{maconomy_installation}"
 
     headers = {
         "Authorization": f"X-OIDC-Code {encoded_code.decode("utf-8")}",
@@ -88,7 +91,7 @@ class AuthCodeResponseHandler(http.server.BaseHTTPRequestHandler):
 
 
 def get_user_info():
-    url = "https://b3iaccess.deltekenterprise.com/maconomy-api/environment/b3?variables=user.employeeinfo.name1"
+    url = f"https://{maconomy_host}/maconomy-api/environment/{maconomy_installation}?variables=user.employeeinfo.name1"
     headers = {
         "authorization": f"X-Reconnect {reconnect_token}",
         "maconomy-authentication": f"X-Reconnect",

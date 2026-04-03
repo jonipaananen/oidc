@@ -43,7 +43,7 @@ Set up a .env file:
 cp template.env .env
 ```
 
-Enter the client and tenant in the [.env](.env) file
+Enter the client id, tenant id, maconomy host, and maconomy installation in the [.env](.env) file
 
 Set up a virtual environment:
 ```commandline
